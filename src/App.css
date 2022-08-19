@@ -7,3 +7,11 @@ body {
   background-color: rgb(237, 235, 235);
   font-family: 'Roboto', sans-serif;
 }
+
+.winner-anouncement {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 2em;
+  color: orange;
+}

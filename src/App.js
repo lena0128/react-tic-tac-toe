@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Board from './components/Board';
+import Cofetti from 'react-confetti';
 import ScoreBoard from './components/ScoreBoard';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
   const [xPlayer, setXplayer] = useState(true); // x player stars the game
   const [ scores, setScores ] =useState({xScore: 0, oScore: 0});
   const [ gameOver, setGameOver ] = useState(false);
+  const [ winner, setWinner ] = useState(null)
 
   const handleClick = (tileIdx) => {
     // state immutability
@@ -60,7 +62,8 @@ function App() {
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         console.log(`${board[x]} is the winner!`)
         setGameOver(true);
-        return board[x];
+        setWinner(board[x])
+        return board[x]
       }
     }
 
@@ -71,14 +74,19 @@ function App() {
     setBoard(Array(9).fill(null));
   }
 
-  const handleResetGameClick = () => [
-    resetGame()
-  ]
+  const handleResetGameClick = () => {
+    setWinner(null);
+    resetGame();
+  }
 
   return (
     <div className="App">
+      { winner ? <Cofetti /> : null}
       <ScoreBoard scores={scores} xPlayer={xPlayer} />
-      <Board board={board} onClick={gameOver ? resetGame() : handleClick}/>
+      <p className="winner-anouncement">
+        {winner ? `${winner} is the winner!` : null}
+      </p>
+      <Board board={board} onClick={handleClick}/>
       <button className="reset-btn" onClick={handleResetGameClick}>RESET</button>
     </div>
   );
